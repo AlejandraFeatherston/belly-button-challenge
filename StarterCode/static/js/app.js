@@ -1,6 +1,6 @@
 const samples = "https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1/14-Interactive-Web-Visualizations/02-Homework/samples.json";
 
-// function plotData(id){
+function plotData(id){
 
     d3.json(samples).then(data =>{
         console.log(data)
@@ -65,4 +65,43 @@ const samples = "https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classr
         Plotly.newPlot("bubble", data1, layout1);
     })
 
-// }
+}
+
+function demoInfo(){
+
+    d3.json(samples).then(data =>{
+
+        var ethnicity = data.metadata[0].ethnicity;
+        var gender = data.metadata[0].gender;
+        var age = data.metadata[0].age;
+        var location = data.metadata[0].location;
+        var bbtype = data.metadata[0].bbtype;
+        var wfreq = data.metadata[0].wfreq;
+        var id = data.metadata[0].id;
+
+        var demoInfo = {"id": id, "ethnicity": ethnicity, "gender": gender, "age": age, "location": location, "bbtype": bbtype, "wfreq": wfreq};
+
+        var demoPanel = d3.select("#sample-metadata");
+
+        Object.entries(demoInfo).forEach((key) => {
+            demoPanel.append("h5").text(key[0] + ": " + key[1] + "\n");
+        });
+    })
+
+}
+
+
+function init() {
+    var selection = d3.select("selDataset");
+
+    d3.json(samples).then((data_value) => {
+        data_value.names.forEach(function(name){
+            selection.append("option").text(name).property("value");
+        });
+
+        plotData(data_value.names[0]);
+    })
+
+}
+
+init();
