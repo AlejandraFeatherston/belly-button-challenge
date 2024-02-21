@@ -90,18 +90,25 @@ function demoInfo(){
 
 }
 
-
-function init() {
-    var selection = d3.select("selDataset");
-
-    d3.json(samples).then((data_value) => {
-        data_value.names.forEach(function(name){
-            selection.append("option").text(name).property("value");
-        });
-
-        plotData(data_value.names[0]);
-    })
-
+function buttonClick(id){
+    plotData(id);
+    demoInfo(id);
 }
 
-init();
+buttonClick();
+
+
+// function init() {
+//     var selection = d3.select("selDataset");
+
+//     d3.json(samples).then((data) => {
+        
+//         var dropdown_values = data.names[0]
+//         selection.add(dropdown_values)
+        
+//         plotData(data.names[0]);
+//     });
+
+// }
+
+// init();
