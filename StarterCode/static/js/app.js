@@ -67,7 +67,7 @@ function plotData(id){
 
 }
 
-function demoInfo(){
+function demoInfo(id){
 
     d3.json(samples).then(data =>{
 
@@ -77,9 +77,9 @@ function demoInfo(){
         var location = data.metadata[0].location;
         var bbtype = data.metadata[0].bbtype;
         var wfreq = data.metadata[0].wfreq;
-        var id = data.metadata[0].id;
+        var ids = data.metadata[0].id;
 
-        var demoInfo = {"id": id, "ethnicity": ethnicity, "gender": gender, "age": age, "location": location, "bbtype": bbtype, "wfreq": wfreq};
+        var demoInfo = {"id": ids, "ethnicity": ethnicity, "gender": gender, "age": age, "location": location, "bbtype": bbtype, "wfreq": wfreq};
 
         var demoPanel = d3.select("#sample-metadata");
 
@@ -90,25 +90,20 @@ function demoInfo(){
 
 }
 
-function buttonClick(id){
+// I couldnt figure out how to make the values change based on the dropdown menu but here's my code attempting to do so
+
+function init(id) {
+    
+    var selection = d3.select("#selDataset");
+
+    d3.json(samples).then((data) => {
+        data.names.forEach(function(name){
+            selection.append("option").text(name);
+        })
+
+    });
     plotData(id);
     demoInfo(id);
 }
 
-buttonClick();
-
-
-// function init() {
-//     var selection = d3.select("selDataset");
-
-//     d3.json(samples).then((data) => {
-        
-//         var dropdown_values = data.names[0]
-//         selection.add(dropdown_values)
-        
-//         plotData(data.names[0]);
-//     });
-
-// }
-
-// init();
+init();
